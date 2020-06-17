@@ -1,7 +1,7 @@
 {
   "name": "mevn",
   "version": "1.0.0",
-  "description": "Rest API with Monggo DB, Express, and NodeJS",
+  "description": "Rest API with Monggo DB, Express, and NodeJS JWT Authentication and Authorization",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -11,14 +11,18 @@
     "express",
     "mongodb",
     "rest",
+    "jwt",
+    "authentication",
     "api"
   ],
   "author": "Idham Kholid",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.16",
     "resolve-url": "^0.2.1",
     "vue": "^2.6.11"

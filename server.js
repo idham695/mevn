@@ -6,6 +6,8 @@ const app = express();
 
 // get db
 const db = require("./app/model");
+const Role = db.role;
+
 db.mongoose
   .connect(db.url, {
     useNewUrlParser: true,
@@ -13,6 +15,7 @@ db.mongoose
   })
   .then(() => {
     console.log("Connected to database");
+    initial();
   })
   .catch((err) => {
     console.log("Cannot connect to the database!", err);
@@ -36,10 +39,48 @@ app.get("/", (req, res) => {
   req.json({ message: "Welcome to my application" });
 });
 
-require("./app/routes/Blogroutes")(app);
+require("./app/routes/BlogRoutes")(app);
+require("./app/routes/UserRoutes")(app);
+require("./app/routes/AuthRoutes")(app);
 
 // set PORT, to listen request
 const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });
+
+function initial() {
+  Role.estimatedDocumentCount((err, count) => {
+    if (!err && count === 0) {
+      new Role({
+        name: "user",
+      }).save((err) => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'user' to roles collection");
+      });
+
+      new Role({
+        name: "moderator",
+      }).save((err) => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'moderator' to roles collection");
+      });
+
+      new Role({
+        name: "admin",
+      }).save((err) => {
+        if (err) {
+          console.log("error", err);
+        }
+
+        console.log("added 'admin' to roles collection");
+      });
+    }
+  });
+}
