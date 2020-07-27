@@ -34,6 +34,8 @@ app.use(bodyParser.json());
 // parse content-type application/x-www-form-urlencoded
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.use("/uploads", express.static("uploads"));
+
 // simple route
 app.get("/", (req, res) => {
   req.json({ message: "Welcome to my application" });
@@ -42,9 +44,10 @@ app.get("/", (req, res) => {
 require("./app/routes/BlogRoutes")(app);
 require("./app/routes/UserRoutes")(app);
 require("./app/routes/AuthRoutes")(app);
+require("./app/routes/CommentRoutes")(app);
 
 // set PORT, to listen request
-const PORT = process.env.PORT || 8080;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

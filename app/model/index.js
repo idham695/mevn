@@ -9,6 +9,7 @@ db.url = dbConfig.url;
 db.blogs = require("./Blog.js")(mongoose);
 db.user = require("./User.js");
 db.role = require("./Role.js");
+db.comment = require("./Comment.js")(mongoose);
 
 db.ROLES = ["user", "admin", "moderator"];
 module.exports = db;

@@ -3,11 +3,11 @@ import VueRouter from "vue-router";
 
 Vue.use(VueRouter);
 
-const router = new VueRouter({
+export const router = new VueRouter({
   mode: "history",
   routes: [
     {
-      path: "/",
+      path: "/blogs",
       name: "blogs",
       component: () => import("../components/BlogsList")
     },
@@ -20,6 +20,47 @@ const router = new VueRouter({
       path: "/add",
       name: "add",
       component: () => import("../components/AddBlog")
+    },
+    {
+      path: "/",
+      name: "home",
+      component: () => import("../views/Home")
+    },
+    {
+      path: "/home",
+      component: () => import("../views/Home")
+    },
+    {
+      path: "/login",
+      component: () => import("../views/Login")
+    },
+    {
+      path: "/register",
+      component: () => import("../views/Register")
+    },
+    {
+      path: "/profile",
+      name: "profile",
+      // lazy-loaded
+      component: () => import("../views/Profile.vue")
+    },
+    {
+      path: "/admin",
+      name: "admin",
+      // lazy-loaded
+      component: () => import("../views/BoardAdmin.vue")
+    },
+    {
+      path: "/mod",
+      name: "moderator",
+      // lazy-loaded
+      component: () => import("../views/BoardModerator.vue")
+    },
+    {
+      path: "/user",
+      name: "user",
+      // lazy-loaded
+      component: () => import("../views/BoardUser.vue")
     }
     // {
     //   path: '/about',
@@ -31,5 +72,14 @@ const router = new VueRouter({
     // }
   ]
 });
+// router.beforeEach((to, from, next) => {
+//   const publicPages = ["/login", "/register", "/home"];
+//   const authRequired = !publicPages.includes(to.path);
+//   const loggedIn = localStorage.getItem("user");
 
-export default router;
+//   if (authRequired && loggedIn) {
+//     next("/login");
+//   } else {
+//     next();
+//   }
+// });

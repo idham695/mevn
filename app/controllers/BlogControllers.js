@@ -12,6 +12,7 @@ exports.create = (req, res) => {
   const blog = new Blog({
     title: req.body.title,
     description: req.body.description,
+    image: req.file.path,
     published: req.body.published ? req.body.published : false,
   });
 
@@ -28,19 +29,17 @@ exports.create = (req, res) => {
     });
 };
 exports.findAll = (req, res) => {
-  const title = req.query.title;
-  var condition = title
-    ? { title: { $regex: new RegExp(title), $options: "i" } }
-    : Blog.find(condition)
-        .then((data) => {
-          res.send(data);
-        })
-        .catch((err) => {
-          res.status(500).send({
-            message:
-              err.message || "Some error occurred while retrieving Blogs",
-          });
-        });
+  const title = req.params.title;
+  Blog.find({ title: { $regex: new RegExp(title), $options: "i" } })
+    .populate("comments")
+    .then((data) => {
+      res.send(data);
+    })
+    .catch((err) => {
+      res.status(500).send({
+        message: err.message || "Some error occurred while retrieving Blogs",
+      });
+    });
 };
 exports.findOne = (req, res) => {
   const id = req.params.id;
@@ -65,6 +64,11 @@ exports.update = (req, res) => {
   }
 
   const id = req.params.id;
+
+  if (req.file) {
+    const image = req.file.path;
+    req.body.image = image;
+  }
 
   Blog.findByIdAndUpdate(id, req.body, { useFindAndModify: false })
     .then((data) => {
@@ -117,7 +121,7 @@ exports.findAllPublished = (req, res) => {
     })
     .catch((err) => {
       res.status(500).send({
-        message: err.message || "Some error occurred while reteiwving Blogs",
+        message: err.message || "Some error occurred while retrieving Blogs",
       });
     });
 };
