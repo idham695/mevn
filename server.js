@@ -47,7 +47,7 @@ require("./app/routes/AuthRoutes")(app);
 require("./app/routes/CommentRoutes")(app);
 
 // set PORT, to listen request
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 8080;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
 });

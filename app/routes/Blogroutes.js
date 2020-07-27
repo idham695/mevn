@@ -31,13 +31,7 @@ module.exports = function (app) {
   });
 
   // Create a new Blog
-  router.post(
-    "/",
-    authjwt.verifyToken,
-    authjwt.isAdmin,
-    upload.single("image"),
-    blogs.create
-  );
+  router.post("/", upload.single("image"), blogs.create);
 
   // Retrieve all Blogs
   router.get("/", blogs.findAll);
